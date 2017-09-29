@@ -1,7 +1,7 @@
 # arduino_projects
 A basic project to create a bot that can navigate through a maze
 
-<code>
+```C
   #include<Servo.h>
   Servo myservo;
   int usspin = 7;
@@ -108,4 +108,4 @@ A basic project to create a bot that can navigate through a maze
      delay(1000);
     }
   }
-</code>
+```
