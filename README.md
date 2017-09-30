@@ -17,6 +17,9 @@ Constraints:
 1) The bot, when faced with a dead end, the path with maximum distance must be the correct pathway.
 2) The bot, shouldn't find a T-point with branching from main path.
 
+Circuit Diagram:
+![Alt text](/CryoScythe/arduino_projects/Circuit_Representation.png?raw=true "Bot - circuit diagram")
+
 ```C
 #include<Servo.h>
 Servo myservo;\\Object myservo created
