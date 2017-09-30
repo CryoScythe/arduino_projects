@@ -2,61 +2,70 @@
 A basic project to create a bot that can navigate through a maze
 
 ```C
+\* Arduino Project - 1
+   Date:29/9/2017
+   Title:Bot to guide through a maze
+*\
+
   #include<Servo.h>
-  Servo myservo;
-  int usspin = 7;
-  int servoPin = 3;
-  int dc1e = 6;
-  int dc2e = 10;
-  int dc1c2 = 12;
-  int dc1c1 = 11;
-  int dc2c1 = 8;
-  int dc2c2 = 9;
+  Servo myservo;\\Object myservo created
+  int usspin = 7;\\Ultrasonic sensor(PING) pin
+  int servoPin = 3;\\Servo pin
+  int dc1e = 6;\\DC motor 1 enabler
+  int dc2e = 10;\\DC motor 2 enabler
+  int dc1c1 = 11;\\DC motor 1 control 1
+  int dc1c2 = 12;\\DC motor 1 control 2
+  int dc2c1 = 8;\\DC motor 1 control 1
+  int dc2c2 = 9;\\DC motor 1 control 2
 
   int len,dist,left,right;
 
-  void setup()
+  void setup()\\Initiation
   {
-    Serial.begin(9600);
-    myservo.attach(servoPin);
+    Serial.begin(9600);\\Declaration of begin
+    myservo.attach(servoPin);\\Attaching servo to pin
     pinMode(dc1e, OUTPUT);
     pinMode(dc2e, OUTPUT);
     pinMode(dc1c1, OUTPUT);
     pinMode(dc1c2, OUTPUT);
     pinMode(dc2c1, OUTPUT);
     pinMode(dc2c2, OUTPUT);
-    myservo.write(90);
+    myservo.write(90);\\Initial postition of servo at 90 degrees
     delay(1000);
   }
 
-  void turnl()
+  void turnl()\\Fuction to turn the bot left
   {
-    digitalWrite(dc1e, HIGH);
-    digitalWrite(dc2e, HIGH);
+    digitalWrite(dc1e, HIGH);\\Enabling dc 1
+    digitalWrite(dc2e, HIGH);\\Enabling dc 2
+    
     digitalWrite(dc1c1, LOW);
-    digitalWrite(dc1c2, HIGH);
+    digitalWrite(dc1c2, HIGH);\\Turning dc 1 in clockwise direction
+    
     digitalWrite(dc2c1, HIGH);
-    digitalWrite(dc2c2, LOW);
+    digitalWrite(dc2c2, LOW);\\Turning dc 2 in anti-clockwise direction
     delay(1000);
   }
 
   void turnr()
   {
-    digitalWrite(dc1e, HIGH);
-    digitalWrite(dc2e, HIGH);
+    digitalWrite(dc1e, HIGH);\\Enabling dc 1
+    digitalWrite(dc2e, HIGH);\\Enabling dc 2
+    
     digitalWrite(dc1c1, HIGH);
-    digitalWrite(dc1c2, LOW);
+    digitalWrite(dc1c2, LOW);\\Turning dc 1 in anti-clockwise direction
+    
     digitalWrite(dc2c1, LOW);
-    digitalWrite(dc2c2, HIGH);
+    digitalWrite(dc2c2, HIGH);\\Turning dc 2 in clockwise direction
     delay(1000);
   }
   
-  int microsecTocm(int microsec)
+  int microsecTocm(int microsec)\\To convert ping time to distance
   {
     return microsec/29/2;
   }
   
-  int ussread()
+  int ussread()\\Throwing and reading echo in ultrasonic sensor 
   {
     pinMode(usspin, OUTPUT);
     digitalWrite(usspin, LOW);
@@ -70,18 +79,14 @@ A basic project to create a bot that can navigate through a maze
     return (dist);
   }
 
-  void checkdir()
+  void checkdir()\\Checking distances left and right
   {
-    myservo.write(0);
+    myservo.write(0);\\Turn servo left
     delay(1000);
     left=ussread();
-    Serial.print("\nleft=");
-    Serial.print(left);
-    myservo.write(179);
+    myservo.write(179);\\Turn servo right
     delay(1000);
     right=ussread();
-    Serial.print("\nright=");
-    Serial.print(right);
     myservo.write(89);
     if(left>=right)
       turnl();
@@ -89,22 +94,22 @@ A basic project to create a bot that can navigate through a maze
       turnr();
   }
 
-  void loop()
+  void loop()\\Continues infinitely
   {
    if(ussread()<=15)
    {
-     digitalWrite(dc1e, LOW);
-     digitalWrite(dc2e, LOW);    
+     digitalWrite(dc1e, LOW);\\Stops dc 1
+     digitalWrite(dc2e, LOW);\\Stops dc 2
      checkdir();
     }
     else
     {
-     digitalWrite(dc1e, HIGH);
-     digitalWrite(dc2e, HIGH);
+     digitalWrite(dc1e, HIGH);\\Enabling dc 1
+     digitalWrite(dc2e, HIGH);\\Enabling dc 2
      digitalWrite(dc1c1, HIGH);
-     digitalWrite(dc1c2, LOW);
+     digitalWrite(dc1c2, LOW);\\Turns dc 1 clockwise
      digitalWrite(dc2c1, HIGH);
-     digitalWrite(dc2c2, LOW);
+     digitalWrite(dc2c2, LOW);\\Turns dc 2 clockwise
      delay(1000);
     }
   }
