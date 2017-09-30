@@ -18,7 +18,7 @@ Constraints:
 2) The bot, shouldn't find a T-point with branching from main path.
 
 Circuit Diagram:
-![Alt text](/CryoScythe/arduino_projects/Circuit_Representation.png?raw=true "Bot - circuit diagram")
+![Alt text](/Circuit_Representation.png?raw=true "Bot - circuit diagram")
 
 ```C
 #include<Servo.h>
